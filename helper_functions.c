@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:05:27 by bnafiai           #+#    #+#             */
-/*   Updated: 2025/07/12 16:05:27 by bnafiai          ###   ########.fr       */
+/*   Created: 2025/07/12 16:32:11 by bnafiai           #+#    #+#             */
+/*   Updated: 2025/07/12 16:32:11 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-
-
-int main(int argc, char **argv)
+size_t ft_strlen(const char *str)
 {
-	if (argc != 2)
-	{
-		write(2, "Incorrect number of arguments\n", 30);
-		return (1);
-	}
-	if (check_extension(argv[1]) == 0)
-	{
-		write(2, "Invalid file extension. Expected .cub\n", 39);
-		return (1);
-	}
+    size_t length = 0;
+
+    while (str[length] != '\0')
+    {
+        length++;
+    }
+    return length;
 }

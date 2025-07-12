@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/12 16:05:27 by bnafiai           #+#    #+#             */
-/*   Updated: 2025/07/12 16:05:27 by bnafiai          ###   ########.fr       */
+/*   Created: 2025/07/12 16:30:09 by bnafiai           #+#    #+#             */
+/*   Updated: 2025/07/12 16:30:09 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../cub.h"
 
-
-
-int main(int argc, char **argv)
+int check_extension(char *filename)
 {
-	if (argc != 2)
+	if (filename == NULL)
+		return (0);
+	int length_filename = 0;
+	length_filename = ft_strlen(filename);
+
+	if (length_filename < 5)
+		return (0);
+
+	if (filename[length_filename - 1] == 'b' && 
+		filename[length_filename - 2] == 'u' &&
+		filename[length_filename - 3] == 'c' &&
+		filename[length_filename - 4] == '.')
 	{
-		write(2, "Incorrect number of arguments\n", 30);
 		return (1);
-	}
-	if (check_extension(argv[1]) == 0)
-	{
-		write(2, "Invalid file extension. Expected .cub\n", 39);
-		return (1);
-	}
+	} 
+
+	return (0);
 }
