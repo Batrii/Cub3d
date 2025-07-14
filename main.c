@@ -14,21 +14,90 @@
 
 int assign_texture(t_config *config, char *line)
 {
+	int i;
 	if (line[0] == 'N' && line[1] == 'O')
 	{
-		config->no_texture = my_strdup(line + 3);
+		i = 2;
+		while (line[i] == ' ')
+			i++;
+		char **split_no_texture = ft_split(line + i, ' ');
+		if (!split_no_texture || !split_no_texture[0])
+		{
+			write(2, "Invalid NO texture format\n", 26);
+			return (1);
+		}
+		if (split_no_texture[1] == NULL)
+		{
+			config->no_texture = my_strdup(split_no_texture[0]);
+		}
+		else
+		{
+			write(2, "Invalid NO texture format\n", 26);
+			return (1);
+		}
 	}
 	else if (line[0] == 'S' && line[1] == 'O')
 	{
-		config->so_texture = my_strdup(line + 3);
+		i = 2;
+		while (line[i] == ' ')
+			i++;	
+		char **split_so_texture = ft_split(line + i, ' ');
+		if (!split_so_texture || !split_so_texture[0])
+		{
+			write(2, "Invalid SO texture format\n", 26);
+			return (1);
+		}
+		if (split_so_texture[1] == NULL)
+		{
+			config->so_texture = my_strdup(split_so_texture[0]);
+		}
+		else
+		{
+			write(2, "Invalid SO texture format\n", 26);
+			return (1);
+		}
 	}
 	else if (line[0] == 'W' && line[1] == 'E')
 	{
-		config->we_texture = my_strdup(line + 3);
+		i = 2;
+		while (line[i] == ' ')
+			i++;
+		char **split_we_texture = ft_split(line + i, ' ');
+		if (!split_we_texture || !split_we_texture[0])
+		{
+			write(2, "Invalid WE texture format\n", 26);
+			return (1);
+		}
+		if (split_we_texture[1] == NULL)
+		{
+			config->we_texture = my_strdup(split_we_texture[0]);
+		}
+		else
+		{
+			write(2, "Invalid WE texture format\n", 26);
+			return (1);
+		}
 	}
 	else if (line[0] == 'E' && line[1] == 'A')
 	{
-		config->ea_texture = my_strdup(line + 3);
+		i = 2;
+		while (line[i] == ' ')
+			i++;
+		char **split_ea_texture = ft_split(line + i, ' ');
+		if (!split_ea_texture || !split_ea_texture[0])
+		{
+			write(2, "Invalid EA texture format\n", 26);
+			return (1);
+		}
+		if (split_ea_texture[1] == NULL)
+		{
+			config->ea_texture = my_strdup(split_ea_texture[0]);
+		}
+		else
+		{
+			write(2, "Invalid EA texture format\n", 26);
+			return (1);
+		}
 	}
 	else
 	{
@@ -49,6 +118,8 @@ int assign_colors(t_config *config, char *line)
 			write(2, "Invalid floor color format\n", 27);
 			return (1);
 		}
+		if (check_valid_colors(split_colors) != 0)
+			return (1);
 		if (check_range_rgb(atoi(split_colors[0])) == 0 &&
 			check_range_rgb(atoi(split_colors[1])) == 0 &&
 			check_range_rgb(atoi(split_colors[2])) == 0)
@@ -73,6 +144,8 @@ int assign_colors(t_config *config, char *line)
 			write(2, "Invalid ceiling color format\n", 29);
 			return (1);
 		}
+		if (check_valid_colors(split_ceiling_colors) != 0)
+			return (1);
 		if (check_range_rgb(atoi(split_ceiling_colors[0])) == 0 &&
 			check_range_rgb(atoi(split_ceiling_colors[1])) == 0 &&
 			check_range_rgb(atoi(split_ceiling_colors[2])) == 0)
@@ -93,10 +166,6 @@ int assign_colors(t_config *config, char *line)
 		return (1);
 	}
 	return (0);
-}
-int assign_map(t_config *config, char *line)
-{
-
 }
 
 int creat_map(char *filename, t_config *config)
@@ -139,6 +208,8 @@ int creat_map(char *filename, t_config *config)
 		}
 		else if (all_six_config(config) == 0)
 		{
+			//valid_line(line);
+			// assign_map to config->map 
 		}
 		else
 		{

@@ -14,30 +14,30 @@
 
 // int check_map()
 
-int check_map(char **map)
-{
-    int i;
-    int j;
+// int check_map(char **map)
+// {
+//     int i;
+//     int j;
 
-    if (!map || !*map)
-        return (0);
-    i = 0;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j])
-        {
-            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ')
-            {
-                write(2, "Invalid character in map\n", 26);
-                return (1);
-            }
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
+//     if (!map || !*map)
+//         return (0);
+//     i = 0;
+//     while (map[i])
+//     {
+//         j = 0;
+//         while (map[i][j])
+//         {
+//             if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ')
+//             {
+//                 write(2, "Invalid character in map\n", 26);
+//                 return (1);
+//             }
+//             j++;
+//         }
+//         i++;
+//     }
+//     return (0);
+// }
 
 int once_player(char **map)
 {

@@ -42,3 +42,45 @@ int all_six_config(t_config *config)
 	}
 	return (0);
 }
+
+
+int valid_line(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (my_strchar("01NSEW ", line[i]) == NULL)
+		{
+			write(2, "Invalid character in line\n", 26);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+
+int check_valid_colors(char **colors)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (colors[i])
+	{
+		j = 0;
+		while (colors[i][j])
+		{
+			if (colors[i][j] < '0' || colors[i][j] > '9')
+			{
+				write(2, "Invalid color value\n", 20);
+				return (1);
+			}
+			j++;
+		}
+		
+	}
+	return (0);
+}

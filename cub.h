@@ -49,10 +49,11 @@ size_t ft_strlen(const char *str);
 int check_range_rgb(int color);
 char	**ft_split(char const *s, char c);
 int all_six_config(t_config *config);
+int check_valid_colors(char **colors);
+int valid_line(char *line);
 //extension check
 int check_extension(char *filename);
 //map check
-int check_map(char **map);
 int once_player(char **map);
 
 #endif
