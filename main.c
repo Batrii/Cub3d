@@ -12,13 +12,14 @@
 
 #include "cub.h"
 
+
 int assign_texture(t_config *config, char *line)
 {
 	int i;
 	if (line[0] == 'N' && line[1] == 'O')
 	{
 		i = 2;
-		while (line[i] == ' ')
+		while (line[i] == ' ' || line[i] == '\t')
 			i++;
 		char **split_no_texture = ft_split(line + i, ' ');
 		if (!split_no_texture || !split_no_texture[0])
@@ -168,7 +169,38 @@ int assign_colors(t_config *config, char *line)
 	return (0);
 }
 
-int creat_map(char *filename, t_config *config)
+int assign_map(t_config *config, char *line)
+{
+	char **new_map;
+	int i;
+	if (valid_line(line) == 0)
+	{
+		new_map = malloc(sizeof(char *) * (config->map_height + 2));
+		if (!new_map)
+		{
+			write(2, "Memory allocation failed for map\n", 33);
+			return (1);
+		}
+		i = 0;
+		while (i < config->map_height)
+		{
+			new_map[i] = config->map[i];
+			i++;
+		}
+		new_map[i] = my_strdup(line);
+		new_map[i + 1] = NULL;
+		free(config->map);
+		config->map = new_map;
+		config->map_height++;
+		if (config->map_width < ft_strlen(line))
+			config->map_width = ft_strlen(line);
+		return (0);
+	}
+	return (1);
+}
+
+
+int create_map(char *filename, t_config *config)
 {
 	int fd;
 	char *line;
@@ -177,12 +209,13 @@ int creat_map(char *filename, t_config *config)
 	if (fd < 0)
 	{
 		write(2, "Error opening file\n", 19);
-		return;
+		return 1;
 	}
+	config->in_map = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '\0' || line[0] == '\n')
+		if (!config->in_map && (line[0] == '\0' || line[0] == '\n'))
 		{
 			free(line);
 			line = get_next_line(fd);
@@ -208,8 +241,13 @@ int creat_map(char *filename, t_config *config)
 		}
 		else if (all_six_config(config) == 0)
 		{
-			//valid_line(line);
-			// assign_map to config->map 
+			config->in_map = 1;
+			if (assign_map(config, line) != 0)
+			{
+				free(line);
+				close(fd);
+				return (1);
+			}
 		}
 		else
 		{
@@ -218,7 +256,11 @@ int creat_map(char *filename, t_config *config)
 			close(fd);
 			return (1);
 		}
+		free(line);
+		line = get_next_line(fd);
 	}
+	close(fd);
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -254,5 +296,7 @@ int main(int argc, char **argv)
 	config->ceiling_color_g = -1;
 	config->map_width = 0;
 	config->map_height = 0;
+	if (create_map(argv[1], config))
+		return (1);
 	return (0);
 }

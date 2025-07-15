@@ -66,4 +66,5 @@ int once_player(char **map)
         }
         i++;
     }
+    return (0);
 }

@@ -35,6 +35,7 @@ typedef struct s_config
 	char **map;
 	int map_width;
 	int map_height;
+	int in_map;
 } t_config;
 
 
@@ -45,7 +46,7 @@ char *my_strdup(char *s);
 char *my_strchar(char *str, int c);
 size_t my_strlen(char *s);
 //helper functions
-size_t ft_strlen(const char *str);
+int ft_strlen(const char *str);
 int check_range_rgb(int color);
 char	**ft_split(char const *s, char c);
 int all_six_config(t_config *config);
