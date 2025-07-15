@@ -48,7 +48,8 @@ size_t my_strlen(char *s);
 //helper functions
 int ft_strlen(const char *str);
 int check_range_rgb(int color);
-char	**ft_split(char const *s, char c);
+void free_split(char **split);
+char	**utils_split(const char *string, char c);
 int all_six_config(t_config *config);
 int check_valid_colors(char **colors);
 int valid_line(char *line);

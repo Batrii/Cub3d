@@ -12,6 +12,21 @@
 
 #include "../cub.h"
 
+void free_split(char **split)
+{
+	int i;
+
+	if (!split)
+		return;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
 int ft_strlen(const char *str)
 {
 	int length = 0;
@@ -49,7 +64,11 @@ int valid_line(char *line)
 	int i;
 
 	i = 0;
-	while (line[i])
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] == '\0' || line[i] == '\n')
+		return (1);
+	while (line[i] && line[i] != '\n')
 	{
 		if (my_strchar("01NSEW ", line[i]) == NULL)
 		{
@@ -80,7 +99,7 @@ int check_valid_colors(char **colors)
 			}
 			j++;
 		}
-		
+		i++;
 	}
 	return (0);
 }

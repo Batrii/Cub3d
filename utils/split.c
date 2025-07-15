@@ -12,78 +12,78 @@
 
 #include "../cub.h"
 
-static char	**ft_free(char **strs, int j)
+static size_t	count_words(const char *string, char c)
 {
-	int	i;
+	int		index;
+	size_t	count;
 
-	i = 0;
-	while (i <= j)
+	index = 0;
+	count = 0;
+	while (string[index] != '\0')
 	{
-		free(strs[i]);
-		i++;
+		if ((index == 0 || string[index - 1] == c) && string[index] != c)
+			count++;
+		index++;
 	}
-	free(strs);
-	return (NULL);
+	return (count);
 }
 
-static int	count(char const *s, char c)
+static int	fill_pointers_while_part(const char *string, char **output,
+	int *sindex, char c)
 {
-	int	i;
-	int	words;
+	int	tindex;
+	int	length;
 
-	i = 0;
-	words = 0;
-	while (s[i] != '\0')
+	tindex = 0;
+	length = 0;
+	while (string[*sindex + length] != c
+		&& string[*sindex + length] != '\0')
+		length++;
+	(*output) = (char *)malloc(sizeof(char) * (length + 1));
+	if ((*output) == NULL)
+		return (1);
+	while (string[*sindex] != '\0' && string[*sindex] != c)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] != '\0')
+		(*output)[tindex] = string[*sindex];
+		(*sindex)++;
+		tindex++;
+	}
+	(*output)[tindex] = '\0';
+	return (0);
+}
+
+static void	fill_pointers(const char *string, char **output, char c)
+{
+	int	sindex;
+	int	zindex;
+
+	sindex = 0;
+	zindex = 0;
+	while (string[sindex] != '\0')
+	{
+		while (string[sindex] == c)
+			sindex++;
+		if (string[sindex] != '\0')
 		{
-			words++;
-			while (s[i] != '\0' && s[i] != c)
-				i++;
+			if (fill_pointers_while_part(string, &(output[zindex]), &sindex, c))
+				return ;
+			zindex++;
 		}
+		if (string[sindex] != '\0')
+			sindex++;
 	}
-	return (words);
+	output[zindex] = NULL;
 }
 
-static char	**fil1(char **strs, char c, char const *s)
+char	**utils_split(const char *string, char c)
 {
-	int	i;
-	int	j;
-	int	start;
+	char	**output;
 
-	i = 0;
-	j = 0;
-	while (s[j] != '\0')
-	{
-		while (s[j] == c)
-			j++;
-		if (s[j])
-		{
-			start = j;
-			while (s[j] != c && s[j])
-				j++;
-			strs[i] = ft_substr(s, start, j - start);
-			if (strs[i] == NULL)
-				return (ft_free(strs, i));
-			i++;
-		}
-	}
-	strs[i] = NULL;
-	return (strs);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**strs;
-	int		words;
-
-	if (s == NULL)
+	if (count_words(string, c) == 0)
 		return (NULL);
-	words = count(s, c);
-	strs = (char **)malloc((words + 1) * (sizeof(char *)));
-	if (strs == NULL)
+	output = (char **)malloc(sizeof(char *) * (count_words(string, c) + 1));
+	if (output == NULL)
 		return (NULL);
-	return (fil1(strs, c, s));
+	fill_pointers(string, output, c);
+	return (output);
 }
