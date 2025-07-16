@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 1
 
 typedef struct s_config
 {
@@ -35,7 +35,6 @@ typedef struct s_config
 	char **map;
 	int map_width;
 	int map_height;
-	int in_map;
 } t_config;
 
 
@@ -49,6 +48,7 @@ size_t my_strlen(char *s);
 int ft_strlen(const char *str);
 int check_range_rgb(int color);
 void free_split(char **split);
+int is_line_empty(char *line);
 char	**utils_split(const char *string, char c);
 int all_six_config(t_config *config);
 int check_valid_colors(char **colors);

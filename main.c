@@ -148,10 +148,6 @@ int assign_colors(t_config *config, char *line)
 	{
 		char **split_ceiling_colors;
 
-		// Trim leading spaces before splitting
-		while (*(line + 2) == ' ')
-			line++;
-
 		split_ceiling_colors = utils_split(line + 2, ',');
 		if (!split_ceiling_colors || !split_ceiling_colors[0] || !split_ceiling_colors[1] || !split_ceiling_colors[2])
 		{
@@ -182,36 +178,29 @@ int assign_colors(t_config *config, char *line)
 	return (0);
 }
 
-int assign_map(t_config *config, char *line)
+void append_map(char ***map, char *line, int *map_height)
 {
 	char **new_map;
 	int i;
-	if (valid_line(line) == 0)
-	{
-		new_map = malloc(sizeof(char *) * (config->map_height + 2));
-		if (!new_map)
-		{
-			write(2, "Memory allocation failed for map\n", 33);
-			return (1);
-		}
-		i = 0;
-		while (i < config->map_height)
-		{
-			new_map[i] = config->map[i];
-			i++;
-		}
-		new_map[i] = my_strdup(line);
-		new_map[i + 1] = NULL;
-		free(config->map);
-		config->map = new_map;
-		config->map_height++;
-		if (config->map_width < ft_strlen(line))
-			config->map_width = ft_strlen(line);
-		return (0);
-	}
-	return (1);
-}
 
+	new_map = malloc(sizeof(char *) * (*map_height + 2));
+	if (!new_map)
+	{
+		write(2, "Memory allocation failed for map\n", 33);
+		exit(1);
+	}
+	i = 0;
+	while (i < *map_height)
+	{
+		new_map[i] = (*map)[i];
+		i++;
+	}
+	new_map[i] = my_strdup(line);
+	new_map[i + 1] = NULL;
+	free(*map);
+	*map = new_map;
+	(*map_height)++;
+}
 
 int create_map(char *filename, t_config *config)
 {
@@ -224,18 +213,17 @@ int create_map(char *filename, t_config *config)
 		write(2, "Error opening file\n", 19);
 		return 1;
 	}
-	config->in_map = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("Line: %s", line);
-		if (line[0] == '\0' || line[0] == '\n')
+		// printf("Line: %s\n", line);
+		if (is_line_empty(line))
 		{
 			free(line);
 			line = get_next_line(fd);
 			continue;
 		}
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+		else if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
 		{
 			if (assign_texture(config, line) != 0)
 			{
@@ -253,23 +241,19 @@ int create_map(char *filename, t_config *config)
 				return (1);
 			}
 		}
-		// // else if (all_six_config(config) == 0)
-		// // {
-		// // 	config->in_map = 1;
-		// // 	if (assign_map(config, line) != 0)
-		// // 	{
-		// // 		free(line);
-		// // 		// close(fd);
-		// // 		return (1);
-		// // 	}
-		// // }
-		// else
-		// {
-		// 	write(2, "Invalid line in configuration\n", 30);
-		// 	free(line);
-		// 	close(fd);
-		// 	return (1);
-		// }
+		else if (line[0] == '1' || line[0] == ' ')
+		{
+			append_map(&(config->map), line, &(config->map_height));
+			if (ft_strlen(line) > config->map_width)
+				config->map_width = ft_strlen(line);
+		}
+		else
+		{
+			write(2, "Invalid line in configuration\n", 30);
+			free(line);
+			close(fd);
+			return (1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -318,11 +302,11 @@ int main(int argc, char **argv)
 	printf("EA Texture: %s\n", config->ea_texture);
 	printf("Floor Color: %d, %d, %d\n", config->floor_color_r, config->floor_color_g, config->floor_color_b);
 	printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
-	// int i = 0;
-	// while (config->map[i])
-	// {
-	// 	printf("%s\n", config->map[i]);
-	// 	i++;
-	// }
+	int i = 0;
+	while (config->map && config->map[i])
+	{
+		printf("%s\n", config->map[i]);
+		i++;
+	}
 	return (0);
 }

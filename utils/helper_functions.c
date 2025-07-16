@@ -27,6 +27,21 @@ void free_split(char **split)
 	free(split);
 }
 
+int is_line_empty(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\r')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+
 int ft_strlen(const char *str)
 {
 	int length = 0;
@@ -89,9 +104,11 @@ int check_valid_colors(char **colors)
 	i = 0;
 	while (colors[i])
 	{
+		printf("Checking color string: %s\n", colors[i]);
 		j = 0;
 		while (colors[i][j])
 		{
+			printf("Checking color: %c\n", colors[i][j]);
 			if (colors[i][j] < '0' || colors[i][j] > '9')
 			{
 				write(2, "Invalid color value\n", 20);
