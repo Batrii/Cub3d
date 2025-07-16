@@ -104,7 +104,7 @@ int check_valid_colors(char **colors)
 	i = 0;
 	while (colors[i])
 	{
-		printf("Checking color string: %s\n", colors[i]);
+		// printf("Checking color string: %s\n", colors[i]);
 		j = 0;
 		while (colors[i][j])
 		{

@@ -296,17 +296,23 @@ int main(int argc, char **argv)
 	config->map_height = 0;
 	if (create_map(argv[1], config))
 		return (1);
-	printf("NO Texture: %s\n", config->no_texture);
-	printf("SO Texture: %s\n", config->so_texture);
-	printf("WE Texture: %s\n", config->we_texture);
-	printf("EA Texture: %s\n", config->ea_texture);
-	printf("Floor Color: %d, %d, %d\n", config->floor_color_r, config->floor_color_g, config->floor_color_b);
-	printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
-	int i = 0;
-	while (config->map && config->map[i])
+	// printf("NO Texture: %s\n", config->no_texture);
+	// printf("SO Texture: %s\n", config->so_texture);
+	// printf("WE Texture: %s\n", config->we_texture);
+	// printf("EA Texture: %s\n", config->ea_texture);
+	// printf("Floor Color: %d, %d, %d\n", config->floor_color_r, config->floor_color_g, config->floor_color_b);
+	// printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
+	// int i = 0;
+	// while (config->map && config->map[i])
+	// {
+	// 	printf("%s\n", config->map[i]);
+	// 	i++;
+	// }
+	if (once_player(config->map) != 0 || check_walls_top_bottom(config->map, config->map_height) != 0 ||
+		check_walls_left_right(config->map, config->map_height, config->map_width) != 0)
 	{
-		printf("%s\n", config->map[i]);
-		i++;
+		free(config);
+		return (1);
 	}
 	return (0);
 }

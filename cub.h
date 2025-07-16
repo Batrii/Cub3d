@@ -57,5 +57,7 @@ int valid_line(char *line);
 int check_extension(char *filename);
 //map check
 int once_player(char **map);
+int check_walls_top_bottom(char **map, int map_height);
+int check_walls_left_right(char **map, int map_height, int map_width);
 
 #endif
