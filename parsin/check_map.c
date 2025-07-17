@@ -44,38 +44,85 @@ int once_player(char **map)
 	return (0);
 }
 
-// int check_walls_top_bottom(char **map, int map_height)
-// {
-// 	int j;
+int check_walls_top_bottom(char **map, int map_height)
+{
+	int j;
+	int len;
 
-// 	j = 0;
-// 	while (map[0][j] == ' ')
-// 		j++;
-// 	while (map[0][j])
-// 	{
-// 		if (map[0][j] != '1')
-// 		{
-// 			printf("map is not surrounded by walls\n");
-// 			return (1);
-// 		}
-// 		j++;
-// 	}
-// 	j = 0;
-// 	while (map[map_height - 1][j] == ' ')
-// 		j++;
-// 	while (map[map_height - 1][j])
-// 	{
-// 		if (map[map_height - 1][j] != '1')
-// 		{
-// 			printf("map is not surrounded by walls\n");
-// 			return (1);
-// 		}
-// 		j++;
-// 	}
-// 	return (0);
-// }
+	len = ft_strlen(map[0]);
+	while (len > 0 && (map[0][len - 1] == '\r' || map[0][len - 1] == '\n'))
+		len--;
+	j = 0;
+	while (j < len && map[0][j] == ' ')
+		j++;
+	while (j < len)
+	{
+		if (map[0][j] != '1')
+		{
+			printf("map is not surrounded by walls\n");
+			return (1);
+		}
+		j++;
+	}
 
-// int check_walls_left_right(char **map, int map_height, int map_width)
+	len = ft_strlen(map[map_height - 1]);
+	while (len > 0 && (map[map_height - 1][len - 1] == '\r' || map[map_height - 1][len - 1] == '\n'))
+		len--;
+	j = 0;
+	while (j < len && map[map_height - 1][j] == ' ')
+		j++;
+	while (j < len)
+	{
+		if (map[map_height - 1][j] != '1')
+		{
+			printf("map is not surrounded by walls\n");
+			return (1);
+		}
+		j++;
+	}
+	return (0);
+}
+
+int check_walls_left_right(char **map, int map_height)
+{
+	int i;
+	int j;
+	int len;
+
+	i = 0;
+	while (i < map_height)
+	{
+		if (!map[i])
+		{
+			printf("Invalid map row\n");
+			return (1);
+		}
+		len = ft_strlen(map[i]);
+
+		while (len > 0 && (map[i][len - 1] == '\r' || map[i][len - 1] == '\n'))
+			len--;
+		j = 0;
+		while (j < len && map[i][j] == ' ')
+			j++;
+		if (j >= len || map[i][j] != '1')
+		{
+			printf("map is not surrounded by walls\n");
+			return (1);
+		}
+		j = len - 1;
+		while (j >= 0 && map[i][j] == ' ')
+			j--;
+		if (j < 0 || map[i][j] != '1')
+		{
+			printf("map is not surrounded by walls\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+// int check_invalid_space(char **map, int map_height, int map_width)
 // {
 // 	int i;
 // 	int j;
@@ -84,22 +131,21 @@ int once_player(char **map)
 // 	while (i < map_height)
 // 	{
 // 		j = 0;
-// 		while (map[i][j] == ' ')
+// 		while (j < map_width)
+// 		{
+// 			if (map[i][j] == ' ')
+// 			{
+// 				if ((i > 0 && map[i - 1][j] != '1') ||
+// 					(i < map_height - 1 && map[i + 1][j] != '1') ||
+// 					(j > 0 && map[i][j - 1] != '1') ||
+// 					(j < map_width - 1 && map[i][j + 1] != '1'))
+// 				{
+// 					printf("Invalid space found in the map\n");
+// 					return (1);
+// 				}
+// 			}
 // 			j++;
-// 		if (map[i][j] != '1')
-// 		{
-// 			printf("map is not surrounded by walls\n");
-// 			return (1);
 // 		}
-// 		j = map_width - 1;
-// 		while (map[i][j] == ' ')
-// 			j--;
-// 		if (map[i][j] != '1')
-// 		{
-// 			printf("map is not surrounded by walls\n");
-// 			return (1);
-// 		}
-// 		i++;
 // 	}
 // 	return (0);
 // }

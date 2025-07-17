@@ -303,13 +303,20 @@ int main(int argc, char **argv)
 	// printf("Floor Color: %d, %d, %d\n", config->floor_color_r, config->floor_color_g, config->floor_color_b);
 	// printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
 	// int i = 0;
+	// int j;
 	// while (config->map && config->map[i])
 	// {
-	// 	printf("%s\n", config->map[i]);
+	// 	printf("line is %s\n", config->map[i]);
+	// 	j = 0;
+	// 	while (config->map[i][j])
+	// 	{
+	// 		printf("line character: [%c] [%d]\n", config->map[i][j], config->map[i][j]);
+	// 		j++;
+	// 	}
 	// 	i++;
 	// }
 	if (once_player(config->map) != 0 || check_walls_top_bottom(config->map, config->map_height) != 0 ||
-		check_walls_left_right(config->map, config->map_height, config->map_width) != 0)
+		check_walls_left_right(config->map, config->map_height) != 0)
 	{
 		free(config);
 		return (1);
