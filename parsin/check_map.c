@@ -73,7 +73,9 @@ int check_walls_top_bottom(char **map, int map_height)
 		j++;
 	while (j < len)
 	{
-		if (map[map_height - 1][j] != '1')
+		if (map[map_height - 1][j] == ' ')
+			j++;
+		else if (map[map_height - 1][j] != '1')
 		{
 			printf("map is not surrounded by walls\n");
 			return (1);
@@ -122,30 +124,31 @@ int check_walls_left_right(char **map, int map_height)
 	return (0);
 }
 
-// int check_invalid_space(char **map, int map_height, int map_width)
-// {
-// 	int i;
-// 	int j;
+int check_invalid_spaces(char **map, int map_height)
+{
+	int i;
+	int j;
+	i = 1;
 
-// 	i = 0;
-// 	while (i < map_height)
-// 	{
-// 		j = 0;
-// 		while (j < map_width)
-// 		{
-// 			if (map[i][j] == ' ')
-// 			{
-// 				if ((i > 0 && map[i - 1][j] != '1') ||
-// 					(i < map_height - 1 && map[i + 1][j] != '1') ||
-// 					(j > 0 && map[i][j - 1] != '1') ||
-// 					(j < map_width - 1 && map[i][j + 1] != '1'))
-// 				{
-// 					printf("Invalid space found in the map\n");
-// 					return (1);
-// 				}
-// 			}
-// 			j++;
-// 		}
-// 	}
-// 	return (0);
-// }
+	while (i < map_height)
+	{
+		j = 1;
+		while (j < ft_strlen(map[i]) - 1)
+		{
+			if (map[i][j] == '0' || map[i][j] == 'N' ||
+				map[i][j] == 'S' || map[i][j] == 'E' || 
+				map[i][j] == 'W')
+			{
+				if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' ||
+					map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+				{
+					printf("Invalid space in map\n");
+					return (1);
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}

@@ -316,7 +316,8 @@ int main(int argc, char **argv)
 	// 	i++;
 	// }
 	if (once_player(config->map) != 0 || check_walls_top_bottom(config->map, config->map_height) != 0 ||
-		check_walls_left_right(config->map, config->map_height) != 0)
+		check_walls_left_right(config->map, config->map_height) != 0 ||
+		check_invalid_spaces(config->map, config->map_height) != 0)
 	{
 		free(config);
 		return (1);
