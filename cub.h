@@ -60,4 +60,5 @@ int once_player(char **map);
 int check_walls_top_bottom(char **map, int map_height);
 int check_walls_left_right(char **map, int map_height);
 int check_invalid_spaces(char **map, int map_height);
+int check_valid_characters(char **map, int map_height);
 #endif

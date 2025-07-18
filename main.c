@@ -241,7 +241,7 @@ int create_map(char *filename, t_config *config)
 				return (1);
 			}
 		}
-		else if (line[0] == '1' || line[0] == ' ')
+		else if (all_six_config(config)  && (line[0] == '1' || line[0] == ' '))
 		{
 			append_map(&(config->map), line, &(config->map_height));
 			if (ft_strlen(line) > config->map_width)
@@ -317,7 +317,8 @@ int main(int argc, char **argv)
 	// }
 	if (once_player(config->map) != 0 || check_walls_top_bottom(config->map, config->map_height) != 0 ||
 		check_walls_left_right(config->map, config->map_height) != 0 ||
-		check_invalid_spaces(config->map, config->map_height) != 0)
+		check_invalid_spaces(config->map, config->map_height) != 0 ||
+		check_valid_characters(config->map, config->map_height) != 0)
 	{
 		free(config);
 		return (1);

@@ -73,29 +73,6 @@ int all_six_config(t_config *config)
 	return (0);
 }
 
-
-int valid_line(char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (line[i] == '\0' || line[i] == '\n')
-		return (1);
-	while (line[i] && line[i] != '\n')
-	{
-		if (my_strchar("01NSEW ", line[i]) == NULL)
-		{
-			write(2, "Invalid character in line\n", 26);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-
 int check_valid_colors(char **colors)
 {
 	int i;

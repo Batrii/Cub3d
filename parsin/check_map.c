@@ -128,23 +128,58 @@ int check_invalid_spaces(char **map, int map_height)
 {
 	int i;
 	int j;
+	int len;
 	i = 1;
 
 	while (i < map_height)
 	{
 		j = 1;
-		while (j < ft_strlen(map[i]) - 1)
+		len = ft_strlen(map[i]);
+		while (j < len - 1)
 		{
 			if (map[i][j] == '0' || map[i][j] == 'N' ||
 				map[i][j] == 'S' || map[i][j] == 'E' || 
 				map[i][j] == 'W')
 			{
-				if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' ||
-					map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+				if ((i - 1 >= 0 && map[i - 1][j] == ' ') ||
+					(i + 1 < map_height && map[i + 1][j] == ' ') ||
+					(j - 1 >= 0 && map[i][j - 1] == ' ') ||
+					(j + 1 < len && map[i][j + 1] == ' '))
 				{
-					printf("Invalid space in map\n");
+					printf("Invalid space in the map\n");
 					return (1);
 				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int check_valid_characters(char **map, int map_height)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < map_height)
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '\r' || map[i][j] == '\n')
+			{
+				j++;
+				continue;
+			}
+			if (map[i][j] != '0' && map[i][j] != '1' &&
+				map[i][j] != 'N' && map[i][j] != 'S' &&
+				map[i][j] != 'E' && map[i][j] != 'W' &&
+				map[i][j] != ' ')
+			{
+				write(2, "Invalid character in map\n", 26);
+				return (1);
 			}
 			j++;
 		}
