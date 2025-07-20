@@ -129,20 +129,20 @@ int assign_colors(t_config *config, char *line)
 		}
 		if (check_valid_colors(split_colors) != 0)
 			return (1);
-		if (check_range_rgb(atoi(split_colors[0])) == 0 &&
-			check_range_rgb(atoi(split_colors[1])) == 0 &&
-			check_range_rgb(atoi(split_colors[2])) == 0)
+		if (check_range_rgb(ft_atoi(split_colors[0])) == 0 &&
+			check_range_rgb(ft_atoi(split_colors[1])) == 0 &&
+			check_range_rgb(ft_atoi(split_colors[2])) == 0)
 		{
-			config->floor_color_r = atoi(split_colors[0]);
-			config->floor_color_g = atoi(split_colors[1]);
-			config->floor_color_b = atoi(split_colors[2]);
+			config->floor_color_r = ft_atoi(split_colors[0]);
+			config->floor_color_g = ft_atoi(split_colors[1]);
+			config->floor_color_b = ft_atoi(split_colors[2]);
 		}
 		else
 		{
 			write(2, "Invalid floor color values\n", 27);
 			return (1);
 		}
-		free_split(split_colors); // Free memory after use
+		free_split(split_colors);
 	}
 	else if (line[0] == 'C')
 	{
@@ -156,13 +156,13 @@ int assign_colors(t_config *config, char *line)
 		}
 		if (check_valid_colors(split_ceiling_colors) != 0)
 			return (1);
-		if (check_range_rgb(atoi(split_ceiling_colors[0])) == 0 &&
-			check_range_rgb(atoi(split_ceiling_colors[1])) == 0 &&
-			check_range_rgb(atoi(split_ceiling_colors[2])) == 0)
+		if (check_range_rgb(ft_atoi(split_ceiling_colors[0])) == 0 &&
+			check_range_rgb(ft_atoi(split_ceiling_colors[1])) == 0 &&
+			check_range_rgb(ft_atoi(split_ceiling_colors[2])) == 0)
 		{
-			config->ceiling_color_r = atoi(split_ceiling_colors[0]);
-			config->ceiling_color_g = atoi(split_ceiling_colors[1]);
-			config->ceiling_color_b = atoi(split_ceiling_colors[2]);
+			config->ceiling_color_r = ft_atoi(split_ceiling_colors[0]);
+			config->ceiling_color_g = ft_atoi(split_ceiling_colors[1]);
+			config->ceiling_color_b = ft_atoi(split_ceiling_colors[2]);
 		}
 		else
 		{
@@ -213,11 +213,12 @@ int create_map(char *filename, t_config *config)
 		write(2, "Error opening file\n", 19);
 		return 1;
 	}
+	int in_map_section = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
 		// printf("Line: %s\n", line);
-		if (is_line_empty(line))
+		if (is_line_empty(line) && !in_map_section)
 		{
 			free(line);
 			line = get_next_line(fd);
@@ -228,7 +229,7 @@ int create_map(char *filename, t_config *config)
 			if (assign_texture(config, line) != 0)
 			{
 				free(line);
-				// close(fd);
+				close(fd);
 				return (1);
 			}
 		}
@@ -237,12 +238,13 @@ int create_map(char *filename, t_config *config)
 			if (assign_colors(config, line) != 0)
 			{
 				free(line);
-				// close(fd);
+				close(fd);
 				return (1);
 			}
 		}
 		else if (all_six_config(config)  && (line[0] == '1' || line[0] == ' '))
 		{
+			in_map_section = 1;
 			append_map(&(config->map), line, &(config->map_height));
 			if (ft_strlen(line) > config->map_width)
 				config->map_width = ft_strlen(line);
@@ -259,6 +261,23 @@ int create_map(char *filename, t_config *config)
 	}
 	close(fd);
 	return (0);
+}
+
+void initialize_config(t_config *config)
+{
+	config->no_texture = NULL;
+	config->so_texture = NULL;
+	config->we_texture = NULL;
+	config->ea_texture = NULL;
+	config->floor_color_r = -1;
+	config->floor_color_g = -1;
+	config->floor_color_b = -1;
+	config->ceiling_color_r = -1;
+	config->ceiling_color_g = -1;
+	config->ceiling_color_b = -1;
+	config->map = NULL;
+	config->map_width = 0;
+	config->map_height = 0;
 }
 
 int main(int argc, char **argv)
@@ -281,19 +300,7 @@ int main(int argc, char **argv)
 		write(2, "Memory allocation failed for config\n", 36);
 		return (1);
 	}
-	config->map = NULL;
-	config->no_texture = NULL;
-	config->so_texture = NULL;
-	config->we_texture = NULL;
-	config->ea_texture = NULL;
-	config->floor_color_b = -1;
-	config->ceiling_color_g = -1;
-	config->floor_color_r = -1;
-	config->ceiling_color_b = -1;
-	config->ceiling_color_r = -1;
-	config->ceiling_color_g = -1;
-	config->map_width = 0;
-	config->map_height = 0;
+	initialize_config(config);
 	if (create_map(argv[1], config))
 		return (1);
 	// printf("NO Texture: %s\n", config->no_texture);

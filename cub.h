@@ -46,6 +46,7 @@ char *my_strchar(char *str, int c);
 size_t my_strlen(char *s);
 //helper functions
 int ft_strlen(const char *str);
+int ft_atoi(char *str);
 int check_range_rgb(int color);
 void free_split(char **split);
 int is_line_empty(char *line);
