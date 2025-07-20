@@ -16,14 +16,14 @@ int	validate_texture(char **split_texture)
 {
 	if (!split_texture || !split_texture[0])
 	{
-		write(2, "Invalid texture format\n", 24);
+		write(2, "Error: Invalid texture format\n", 30);
 		if (split_texture)
 			free_split(split_texture);
 		return (1);
 	}
 	if (split_texture[1] != NULL)
 	{
-		write(2, "Invalid texture format\n", 24);
+		write(2, "Error: Invalid texture format\n", 30);
 		free_split(split_texture);
 		return (1);
 	}
@@ -76,7 +76,7 @@ int	assign_texture(t_config *config, char *line)
 	}
 	else
 	{
-		write(2, "Invalid texture line\n", 21);
+		write(2, "Error: Invalid texture line\n", 21);
 		return (1);
 	}
 	return (0);
@@ -86,7 +86,7 @@ int validate_colors(char **colors)
 {
     if (!colors || !colors[0] || !colors[1] || !colors[2])
     {
-        write(2, "Invalid color format\n", 22);
+        write(2, "Error: Invalid color format\n", 28);
         return (1);
     }
     if (check_valid_colors(colors) != 0)
@@ -99,7 +99,7 @@ int validate_colors(char **colors)
     }
     else
     {
-        write(2, "Invalid color values\n", 22);
+        write(2, "Error: Invalid color values\n", 28);
         return (1);
     }
 }
@@ -131,7 +131,7 @@ int assign_colors(t_config *config, char *line)
 	}
 	else
 	{
-		write(2, "Invalid color line\n", 19);
+		write(2, "Error : Invalid color line\n", 27);
 		return (1);
 	}
 	return (0);

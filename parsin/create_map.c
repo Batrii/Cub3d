@@ -20,7 +20,7 @@ static void append_map(char ***map, char *line, int *map_height)
 	new_map = malloc(sizeof(char *) * (*map_height + 2));
 	if (!new_map)
 	{
-		write(2, "Memory allocation failed for map\n", 33);
+		write(2, "Error: Memory allocation failed for map\n", 40);
 		exit(1);
 	}
 	i = 0;
@@ -57,7 +57,7 @@ static int handle_config_section(t_config *config, char *line, int *in_map_secti
     }
     else
     {
-        write(2, "Invalid line in configuration\n", 30);
+        write(2, "Error: Invalid line in configuration\n", 37);
         return (1);
     }
     return (0);
@@ -65,23 +65,25 @@ static int handle_config_section(t_config *config, char *line, int *in_map_secti
 
 static int open_file(char *filename)
 {
-    int fd = open(filename, O_RDONLY);
-    if (fd < 0)
-    {
-        write(2, "Error opening file\n", 19);
-        return -1;
-    }
-    return fd;
+	int fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		write(2, "Error: opening file\n", 19);
+		return (-1);
+	}
+	return (fd);
 }
 
 static int skip_empty_lines(int fd, char **line)
 {
-    while (*line && is_line_empty(*line))
-    {
-        free(*line);
-        *line = get_next_line(fd);
-    }
-    return (*line == NULL);
+	while (*line && is_line_empty(*line))
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
+	return (*line == NULL);
 }
 
 int create_map(char *filename, t_config *config)
@@ -97,7 +99,7 @@ int create_map(char *filename, t_config *config)
 	while (line)
 	{
 		if (skip_empty_lines(fd, &line))
-			return 1;
+			return (1);
 		if (handle_config_section(config, line, &in_map_section) != 0)
 		{
 			free(line);

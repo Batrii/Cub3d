@@ -33,7 +33,7 @@ int once_player(char **map)
 				count_player++;
 				if (count_player > 1)
 				{
-					write(2, "Multiple players found in map\n", 31);
+					write(2, "Error: Multiple players found in map\n", 37);
 					return (1);
 				}
 			}
@@ -59,7 +59,7 @@ int check_walls_top_bottom(char **map, int map_height)
 	{
 		if (map[0][j] != '1')
 		{
-			printf("map is not surrounded by walls\n");
+			printf("Error: map is not surrounded by walls\n");
 			return (1);
 		}
 		j++;
@@ -77,7 +77,7 @@ int check_walls_top_bottom(char **map, int map_height)
 			j++;
 		else if (map[map_height - 1][j] != '1')
 		{
-			printf("map is not surrounded by walls\n");
+			printf("Error: map is not surrounded by walls\n");
 			return (1);
 		}
 		j++;
@@ -96,7 +96,7 @@ int check_walls_left_right(char **map, int map_height)
 	{
 		if (!map[i])
 		{
-			printf("Invalid map row\n");
+			printf("Error: Invalid map row\n");
 			return (1);
 		}
 		len = ft_strlen(map[i]);
@@ -108,7 +108,7 @@ int check_walls_left_right(char **map, int map_height)
 			j++;
 		if (j >= len || map[i][j] != '1')
 		{
-			printf("map is not surrounded by walls\n");
+			printf("Error :map is not surrounded by walls\n");
 			return (1);
 		}
 		j = len - 1;
@@ -116,7 +116,7 @@ int check_walls_left_right(char **map, int map_height)
 			j--;
 		if (j < 0 || map[i][j] != '1')
 		{
-			printf("map is not surrounded by walls\n");
+			printf("Error: map is not surrounded by walls\n");
 			return (1);
 		}
 		i++;
@@ -146,7 +146,7 @@ int check_invalid_spaces(char **map, int map_height)
 					(j - 1 >= 0 && map[i][j - 1] == ' ') ||
 					(j + 1 < len && map[i][j + 1] == ' '))
 				{
-					printf("Invalid space in the map\n");
+					printf("Error: Invalid space in the map\n");
 					return (1);
 				}
 			}
@@ -178,7 +178,7 @@ int check_valid_characters(char **map, int map_height)
 				map[i][j] != 'E' && map[i][j] != 'W' &&
 				map[i][j] != ' ')
 			{
-				write(2, "Invalid character in map\n", 26);
+				write(2, "Error: Invalid character in map\n", 26);
 				return (1);
 			}
 			j++;
