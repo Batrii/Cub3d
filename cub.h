@@ -64,4 +64,6 @@ int check_valid_characters(char **map, int map_height);
 //assign colors and textures
 int assign_texture(t_config *config, char *line);
 int assign_colors(t_config *config, char *line);
+//map creation
+int create_map(char *filename, t_config *config);
 #endif
