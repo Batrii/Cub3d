@@ -53,7 +53,6 @@ int is_line_empty(char *line);
 char	**utils_split(const char *string, char c);
 int all_six_config(t_config *config);
 int check_valid_colors(char **colors);
-int valid_line(char *line);
 //extension check
 int check_extension(char *filename);
 //map check
@@ -62,4 +61,7 @@ int check_walls_top_bottom(char **map, int map_height);
 int check_walls_left_right(char **map, int map_height);
 int check_invalid_spaces(char **map, int map_height);
 int check_valid_characters(char **map, int map_height);
+//assign colors and textures
+int assign_texture(t_config *config, char *line);
+int assign_colors(t_config *config, char *line);
 #endif

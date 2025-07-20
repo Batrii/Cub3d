@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 
 SRCS = main.c utils/helper_functions.c parsin/check_path.c parsin/check_map.c utils/get_next_line.c utils/get_next_line_utils.c \
-		utils/split.c 
+		utils/split.c parsin/assign_col_tex.c
 OBJS = $(SRCS:.c=.o)
 
 NAME = cub3d
