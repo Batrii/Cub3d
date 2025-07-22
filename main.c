@@ -29,6 +29,25 @@ void initialize_config(t_config *config)
 	config->map_height = 0;
 }
 
+void free_config(t_config *config)
+{
+	if (config->no_texture)
+		free(config->no_texture);
+	if (config->so_texture)
+		free(config->so_texture);
+	if (config->we_texture)
+		free(config->we_texture);
+	if (config->ea_texture)
+		free(config->ea_texture);
+	if (config->map)
+	{
+		for (int i = 0; i < config->map_height; i++)
+			free(config->map[i]);
+		free(config->map);
+	}
+	free(config);
+}
+
 int main(int argc, char **argv)
 {
 	t_config *config;
@@ -51,7 +70,10 @@ int main(int argc, char **argv)
 	}
 	initialize_config(config);
 	if (create_map(argv[1], config))
+	{
+		free_config(config);
 		return (1);
+	}
 	// printf("NO Texture: %s\n", config->no_texture);
 	// printf("SO Texture: %s\n", config->so_texture);
 	// printf("WE Texture: %s\n", config->we_texture);
@@ -60,15 +82,15 @@ int main(int argc, char **argv)
 	// printf("Ceiling Color: %d, %d, %d\n", config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
 	// int i = 0;
 	// int j;
-	// while (config->map && config->map[i])
+	// while (i < config->map_height)
 	// {
-	// 	printf("line is %s\n", config->map[i]);
 	// 	j = 0;
 	// 	while (config->map[i][j])
 	// 	{
-	// 		printf("line character: [%c] [%d]\n", config->map[i][j], config->map[i][j]);
+	// 		printf("%c", config->map[i][j]);
 	// 		j++;
 	// 	}
+	// 	printf("\n");
 	// 	i++;
 	// }
 	if (once_player(config->map) != 0 || check_walls_top_bottom(config->map, config->map_height) != 0 ||
@@ -76,8 +98,9 @@ int main(int argc, char **argv)
 		check_invalid_spaces(config->map, config->map_height) != 0 ||
 		check_valid_characters(config->map, config->map_height) != 0)
 	{
-		free(config);
+		free_config(config);
 		return (1);
 	}
+	free_config(config);
 	return (0);
 }
