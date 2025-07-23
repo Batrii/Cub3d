@@ -140,6 +140,23 @@ int check_walls_left_right(char **map, int map_height)
 	return (0);
 }
 
+int is_invalid_space(char **map, int i, int j, int map_height, int len)
+{
+	if (map[i][j] == '0' || map[i][j] == 'N' ||
+		map[i][j] == 'S' || map[i][j] == 'E' || 
+		map[i][j] == 'W')
+	{
+		if (i - 1 < 0 || j >= ft_strlen(map[i - 1]) || map[i - 1][j] == ' ')
+			return (1);
+		if (i + 1 >= map_height || j >= ft_strlen(map[i + 1]) || map[i + 1][j] == ' ')
+			return (1);
+		if (j - 1 < 0 || map[i][j - 1] == ' ')
+			return (1);
+		if (j + 1 >= len || map[i][j + 1] == ' ')
+			return (1);
+	}
+	return (0);
+}
 
 int check_invalid_spaces(char **map, int map_height)
 {
@@ -158,14 +175,8 @@ int check_invalid_spaces(char **map, int map_height)
 				map[i][j] == 'S' || map[i][j] == 'E' || 
 				map[i][j] == 'W')
 			{
-				if ((i - 1 >= 0 && map[i - 1][j] == ' ') ||
-					(i + 1 < map_height && map[i + 1][j] == ' ') ||
-					(j - 1 >= 0 && map[i][j - 1] == ' ') ||
-					(j + 1 < len && map[i][j + 1] == ' '))
-				{
-					printf("Error: Invalid space in the map\n");
-					return (1);
-				}
+				if (is_invalid_space(map, i, j, map_height, len) != 0)
+					return (printf("Error : invalid spaces\n"), 1);
 			}
 			j++;
 		}

@@ -85,7 +85,8 @@ int check_valid_colors(char **colors)
 		j = 0;
 		while (colors[i][j])
 		{
-			if (colors[i][j] == 13 || colors[i][j] == '\n')
+			if (colors[i][j] == 13 || colors[i][j] == '\n'
+				|| colors[i][j] == ' ')
 				break;
 			if (colors[i][j] < '0' || colors[i][j] > '9')
 			{
