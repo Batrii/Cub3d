@@ -33,8 +33,7 @@ int once_player(char **map)
 				count_player++;
 				if (count_player > 1)
 				{
-					write(2, "Error: Multiple players found in map\n", 37);
-					return (1);
+					return (write(2, "Error: Multiple players found in map\n", 37), 1);
 				}
 			}
 			j++;
@@ -44,101 +43,6 @@ int once_player(char **map)
 	return (0);
 }
 
-int check_top_walls(char **map, int map_height)
-{
-	int i;
-	int len;
-
-	(void)map_height;
-	len = ft_strlen(map[0]);
-	while (len > 0 && (map[0][len - 1] == '\r' || map[0][len - 1] == '\n'))
-		len--;
-	i = 0;
-	while (i < len && map[0][i] == ' ')
-		i++;
-	while (i < len)
-	{
-		if (map[0][i] != '1')
-		{
-			printf("Error: map is not surrounded by walls\n");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-int check_bottom_walls(char **map, int map_height)
-{
-	int j;
-	int len;
-
-	len = ft_strlen(map[map_height - 1]);
-	while (len > 0 && (map[map_height - 1][len - 1] == '\r' || map[map_height - 1][len - 1] == '\n'))
-		len--;
-	j = 0;
-	while (j < len && map[map_height - 1][j] == ' ')
-		j++;
-	while (j < len)
-	{
-		if (map[map_height - 1][j] == ' ')
-			j++;
-		else if (map[map_height - 1][j] != '1')
-		{
-			printf("Error: map is not surrounded by walls\n");
-			return (1);
-		}
-		j++;
-	}
-	return (0);
-}
-
-int check_walls_top_bottom(char **map, int map_height)
-{
-	if (check_top_walls(map, map_height) != 0)
-		return (1);
-	if (check_bottom_walls(map, map_height) != 0)
-		return (1);
-	return (0);
-}
-
-int check_walls_left_right(char **map, int map_height)
-{
-	int i;
-	int j;
-	int len;
-
-	i = 0;
-	while (i < map_height)
-	{
-		if (!map[i])
-		{
-			printf("Error: Invalid map row\n");
-			return (1);
-		}
-		len = ft_strlen(map[i]);
-
-		while (len > 0 && (map[i][len - 1] == '\r' || map[i][len - 1] == '\n'))
-			len--;
-		j = 0;
-		while (j < len && map[i][j] == ' ')
-			j++;
-		if (j >= len || map[i][j] != '1')
-		{
-			printf("Error :map is not surrounded by walls\n");
-			return (1);
-		}
-		j = len - 1;
-		while (j >= 0 && map[i][j] == ' ')
-			j--;
-		if (j < 0 || map[i][j] != '1')
-		{
-			printf("Error: map is not surrounded by walls\n");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
 
 int is_invalid_space(char **map, int i, int j, int map_height, int len)
 {
@@ -205,10 +109,7 @@ int check_valid_characters(char **map, int map_height)
 				map[i][j] != 'N' && map[i][j] != 'S' &&
 				map[i][j] != 'E' && map[i][j] != 'W' &&
 				map[i][j] != ' ')
-			{
-				write(2, "Error: Invalid character in map\n", 26);
-				return (1);
-			}
+				return (write(2, "Error: Invalid character in map\n", 26), 1);
 			j++;
 		}
 		i++;

@@ -66,4 +66,9 @@ int assign_texture(t_config *config, char *line);
 int assign_colors(t_config *config, char *line);
 //map creation
 int create_map(char *filename, t_config *config);
+//check walls helpers
+int	check_right_walls(char **map, int len, int i);
+int	check_left_walls(char **map, int len, int i);
+int	check_bottom_walls(char **map, int map_height);
+int	check_top_walls(char **map, int map_height);
 #endif

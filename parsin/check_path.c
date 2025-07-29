@@ -12,7 +12,7 @@
 
 #include "../cub.h"
 
-int check_extension(char *filename)
+int	check_extension(char *filename)
 {
 	int	length_filename;
 

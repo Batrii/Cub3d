@@ -29,15 +29,18 @@ int	validate_texture(char **split_texture)
 	}
 	return (0);
 }
+
 int	skip_spaces(const char *line, int index)
 {
 	while (line[index] == ' ' || line[index] == '\t')
 		index++;
 	return index;
 }
+
 int	assign_texture(t_config *config, char *line)
 {
-	int i;
+	int	i;
+
 	if (line[0] == 'N' && line[1] == 'O')
 	{
 		i = skip_spaces(line, 2);
@@ -82,7 +85,7 @@ int	assign_texture(t_config *config, char *line)
 	return (0);
 }
 
-int validate_colors(char **colors)
+int	validate_colors(char **colors)
 {
     if (!colors || !colors[0] || !colors[1] || !colors[2])
     {
@@ -103,7 +106,8 @@ int validate_colors(char **colors)
         return (1);
     }
 }
-int assign_colors(t_config *config, char *line)
+
+int	assign_colors(t_config *config, char *line)
 {
 	if (line[0] == 'F')
 	{

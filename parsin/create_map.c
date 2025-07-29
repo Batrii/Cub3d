@@ -12,10 +12,10 @@
 
 #include "../cub.h"
 
-static void append_map(char ***map, char *line, int *map_height)
+static void	append_map(char ***map, char *line, int *map_height)
 {
-	char **new_map;
-	int i;
+	char	**new_map;
+	int		i;
 
 	new_map = malloc(sizeof(char *) * (*map_height + 2));
 	if (!new_map)
@@ -36,7 +36,7 @@ static void append_map(char ***map, char *line, int *map_height)
 	(*map_height)++;
 }
 
-static int handle_config_section(t_config *config, char *line, int *in_map_section)
+static int	handle_config_section(t_config *config, char *line, int *in_map_section)
 {
     if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
     {
@@ -63,9 +63,9 @@ static int handle_config_section(t_config *config, char *line, int *in_map_secti
     return (0);
 }
 
-static int open_file(char *filename)
+static int	open_file(char *filename)
 {
-	int fd;
+	int	fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -76,7 +76,7 @@ static int open_file(char *filename)
 	return (fd);
 }
 
-static int skip_empty_lines(int fd, char **line)
+static int	skip_empty_lines(int fd, char **line)
 {
 	while (*line && is_line_empty(*line))
 	{
@@ -86,11 +86,11 @@ static int skip_empty_lines(int fd, char **line)
 	return (*line == NULL);
 }
 
-int create_map(char *filename, t_config *config)
+int	create_map(char *filename, t_config *config)
 {
-	int fd;
-	char *line;
-	int in_map_section;
+	int		fd;
+	char	*line;
+	int		in_map_section;
 
 	in_map_section = 0;
 	if ((fd = open_file(filename)) < 0)
@@ -111,9 +111,6 @@ int create_map(char *filename, t_config *config)
 	}
 	close(fd);
 	if (!in_map_section)
-	{
-		write(2, "Error: No map found in the file\n", 32);
-		return (1);
-	}
+		return (write(2, "Error: No map found in the file\n", 32), 1);
 	return (0);
 }
