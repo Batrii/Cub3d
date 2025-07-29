@@ -42,7 +42,8 @@ int	check_bottom_walls(char **map, int map_height)
 	int	len;
 
 	len = ft_strlen(map[map_height - 1]);
-	while (len > 0 && (map[map_height - 1][len - 1] == '\r' || map[map_height - 1][len - 1] == '\n'))
+	while (len > 0 && (map[map_height - 1][len - 1] == '\r'
+		|| map[map_height - 1][len - 1] == '\n'))
 		len--;
 	j = 0;
 	while (j < len && map[map_height - 1][j] == ' ')
@@ -64,7 +65,7 @@ int	check_bottom_walls(char **map, int map_height)
 int	check_left_walls(char **map, int len, int i)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < len && map[i][j] == ' ')
 		j++;

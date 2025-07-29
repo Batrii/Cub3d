@@ -39,8 +39,8 @@ int	check_walls_left_right(char **map, int map_height)
 			len--;
 		if (check_left_walls(map, len, i) != 0)
 			return (1);
-        if (check_right_walls(map, len, i) != 0)
-            return (1);
+		if (check_right_walls(map, len, i) != 0)
+			return (1);
 		i++;
 	}
 	return (0);

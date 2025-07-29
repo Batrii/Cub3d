@@ -36,31 +36,31 @@ static void	append_map(char ***map, char *line, int *map_height)
 	(*map_height)++;
 }
 
-static int	handle_config_section(t_config *config, char *line, int *in_map_section)
+static int	handle_config_sec(t_config *config, char *line, int *in_map_section)
 {
-    if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
-    {
-        if (assign_texture(config, line) != 0)
-            return (1);
-    }
-    else if (line[0] == 'F' || line[0] == 'C')
-    {
-        if (assign_colors(config, line) != 0)
-            return (1);
-    }
-    else if (all_six_config(config) && (line[0] == '1' || line[0] == ' '))
-    {
-        *in_map_section = 1;
-        append_map(&(config->map), line, &(config->map_height));
-        if (ft_strlen(line) > config->map_width)
-            config->map_width = ft_strlen(line);
-    }
-    else
-    {
-        write(2, "Error: Invalid line in configuration\n", 37);
-        return (1);
-    }
-    return (0);
+	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+	{
+		if (assign_texture(config, line) != 0)
+			return (1);
+	}
+	else if (line[0] == 'F' || line[0] == 'C')
+	{
+		if (assign_colors(config, line) != 0)
+			return (1);
+	}
+	else if (all_six_config(config) && (line[0] == '1' || line[0] == ' '))
+	{
+		*in_map_section = 1;
+		append_map(&(config->map), line, &(config->map_height));
+		if (ft_strlen(line) > config->map_width)
+			config->map_width = ft_strlen(line);
+	}
+	else
+	{
+		write(2, "Error: Invalid line in configuration\n", 37);
+		return (1);
+	}
+	return (0);
 }
 
 static int	open_file(char *filename)
@@ -100,7 +100,7 @@ int	create_map(char *filename, t_config *config)
 	{
 		if (skip_empty_lines(fd, &line))
 			return (1);
-		if (handle_config_section(config, line, &in_map_section) != 0)
+		if (handle_config_sec(config, line, &in_map_section) != 0)
 		{
 			free(line);
 			close(fd);

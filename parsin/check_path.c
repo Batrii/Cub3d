@@ -19,12 +19,12 @@ int	check_extension(char *filename)
 	length_filename = ft_strlen(filename);
 	if (length_filename < 5)
 		return (0);
-	if (filename[length_filename - 1] == 'b' && 
-		filename[length_filename - 2] == 'u' &&
-		filename[length_filename - 3] == 'c' &&
-		filename[length_filename - 4] == '.')
+	if (filename[length_filename - 1] == 'b'
+		&& filename[length_filename - 2] == 'u'
+		&& filename[length_filename - 3] == 'c'
+		&& filename[length_filename - 4] == '.')
 	{
 		return (1);
-	} 
+	}
 	return (0);
 }

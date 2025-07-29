@@ -12,12 +12,12 @@
 
 #include "../cub.h"
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-	int i;
+	int	i;
 
 	if (!split)
-		return;
+		return ;
 	i = 0;
 	while (split[i])
 	{
@@ -27,84 +27,53 @@ void free_split(char **split)
 	free(split);
 }
 
-int is_line_empty(char *line)
+int	is_line_empty(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\r')
+		if (line[i] != ' '
+			&& line[i] != '\t'
+			&& line[i] != '\n'
+			&& line[i] != '\r')
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-
-int ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	int length = 0;
+	int	length;
 
+	length = 0;
 	while (str[length] != '\0')
 	{
 		length++;
 	}
-	return length;
+	return (length);
 }
 
-int check_range_rgb(int color)
+int	all_six_config(t_config *config)
 {
-	if (color < 0 || color > 255)
-	{
-		write(2, "Error : Color value out of range (0-255)\n", 34);
-		return (1);
-	}
-	return (0);
-}
-int all_six_config(t_config *config)
-{
-	if (config->no_texture && config->so_texture && config->we_texture &&
-		config->ea_texture && config->floor_color_r != -1 &&
-		config->ceiling_color_r != -1)
+	if (config->no_texture && config->so_texture
+		&& config->we_texture
+		&& config->ea_texture
+		&& config->floor_color_r != -1
+		&& config->ceiling_color_r != -1)
 	{
 		return (1);
 	}
 	return (0);
 }
 
-int check_valid_colors(char **colors)
+int	ft_atoi(char *str)
 {
-	int i;
-	int j;
-
-	i = 0;
-	while (colors[i])
-	{
-		// printf("Checking color string: %s\n", colors[i]);
-		j = 0;
-		while (colors[i][j])
-		{
-			if (colors[i][j] == 13 || colors[i][j] == '\n'
-				|| colors[i][j] == ' ')
-				break;
-			if (colors[i][j] < '0' || colors[i][j] > '9')
-			{
-				write(2, "Invalid color value\n", 20);
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-int ft_atoi(char *str)
-{
-	int i;
-	int sign;
-	int res;
+	int	i;
+	int	sign;
+	int	res;
 
 	i = 0;
 	sign = 1;
@@ -118,7 +87,6 @@ int ft_atoi(char *str)
 	}
 	else if (str[i] == '+')
 		i++;
-
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');

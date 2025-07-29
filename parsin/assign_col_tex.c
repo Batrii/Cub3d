@@ -34,17 +34,21 @@ int	skip_spaces(const char *line, int index)
 {
 	while (line[index] == ' ' || line[index] == '\t')
 		index++;
-	return index;
+	return (index);
 }
 
 int	assign_texture(t_config *config, char *line)
 {
-	int	i;
+	int		i;
+	char	**split_so_texture;
+	char	**split_we_texture;
+	char	**split_ea_texture;
+	char	**split_no_texture;
 
 	if (line[0] == 'N' && line[1] == 'O')
 	{
 		i = skip_spaces(line, 2);
-		char **split_no_texture = utils_split(line + i, ' ');
+		split_no_texture = utils_split(line + i, ' ');
 		if (validate_texture(split_no_texture) != 0)
 			return (1);
 		config->no_texture = my_strdup(split_no_texture[0]);
@@ -52,8 +56,8 @@ int	assign_texture(t_config *config, char *line)
 	}
 	else if (line[0] == 'S' && line[1] == 'O')
 	{
-		i = skip_spaces(line, 2);	
-		char **split_so_texture = utils_split(line + i, ' ');
+		i = skip_spaces(line, 2);
+		split_so_texture = utils_split(line + i, ' ');
 		if (validate_texture(split_so_texture) != 0)
 			return (1);
 		config->so_texture = my_strdup(split_so_texture[0]);
@@ -62,7 +66,7 @@ int	assign_texture(t_config *config, char *line)
 	else if (line[0] == 'W' && line[1] == 'E')
 	{
 		i = skip_spaces(line, 2);
-		char **split_we_texture = utils_split(line + i, ' ');
+		split_we_texture = utils_split(line + i, ' ');
 		if (validate_texture(split_we_texture) != 0)
 			return (1);
 		config->we_texture = my_strdup(split_we_texture[0]);
@@ -71,7 +75,7 @@ int	assign_texture(t_config *config, char *line)
 	else if (line[0] == 'E' && line[1] == 'A')
 	{
 		i = skip_spaces(line, 2);
-		char **split_ea_texture = utils_split(line + i, ' ');
+		split_ea_texture = utils_split(line + i, ' ');
 		if (validate_texture(split_ea_texture) != 0)
 			return (1);
 		config->ea_texture = my_strdup(split_ea_texture[0]);
@@ -87,39 +91,40 @@ int	assign_texture(t_config *config, char *line)
 
 int	validate_colors(char **colors)
 {
-    if (!colors || !colors[0] || !colors[1] || !colors[2])
-    {
-        write(2, "Error: Invalid color format\n", 28);
-        return (1);
-    }
-    if (check_valid_colors(colors) != 0)
-        return (1);
-    if (check_range_rgb(ft_atoi(colors[0])) == 0 &&
-        check_range_rgb(ft_atoi(colors[1])) == 0 &&
-        check_range_rgb(ft_atoi(colors[2])) == 0)
-    {
-        return (0);
-    }
-    else
-    {
-        write(2, "Error: Invalid color values\n", 28);
-        return (1);
-    }
+	if (!colors || !colors[0] || !colors[1] || !colors[2])
+	{
+		write(2, "Error: Invalid color format\n", 28);
+		return (1);
+	}
+	if (check_valid_colors(colors) != 0)
+		return (1);
+	if (check_range_rgb(ft_atoi(colors[0])) == 0
+		&& check_range_rgb(ft_atoi(colors[1])) == 0
+		&& check_range_rgb(ft_atoi(colors[2])) == 0)
+	{
+		return (0);
+	}
+	else
+	{
+		write(2, "Error: Invalid color values\n", 28);
+		return (1);
+	}
 }
 
 int	assign_colors(t_config *config, char *line)
 {
+	int		i;
+	char	**split_colors;
+	char	**split_ceiling_colors;
+
 	if (line[0] == 'F')
 	{
-		int i;
-		char **split_colors;
-
 		i = skip_spaces(line, 2);
 		split_colors = utils_split(line + i, ',');
-        if (validate_colors(split_colors) != 0)
+		if (validate_colors(split_colors) != 0)
 		{
 			free_split(split_colors);
-            return (1);
+			return (1);
 		}
 		config->floor_color_r = ft_atoi(split_colors[0]);
 		config->floor_color_g = ft_atoi(split_colors[1]);
@@ -128,20 +133,17 @@ int	assign_colors(t_config *config, char *line)
 	}
 	else if (line[0] == 'C')
 	{
-		int i;
-		char **split_ceiling_colors;
-
 		i = skip_spaces(line, 2);
 		split_ceiling_colors = utils_split(line + i, ',');
-        if (validate_colors(split_ceiling_colors) != 0)
+		if (validate_colors(split_ceiling_colors) != 0)
 		{
 			free_split(split_ceiling_colors);
-            return (1);
+			return (1);
 		}
 		config->ceiling_color_r = ft_atoi(split_ceiling_colors[0]);
 		config->ceiling_color_g = ft_atoi(split_ceiling_colors[1]);
 		config->ceiling_color_b = ft_atoi(split_ceiling_colors[2]);
-        free_split(split_ceiling_colors);
+		free_split(split_ceiling_colors);
 	}
 	else
 	{
