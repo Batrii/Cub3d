@@ -6,7 +6,7 @@
 /*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:51:14 by bnafiai           #+#    #+#             */
-/*   Updated: 2025/07/29 17:52:10 by bnafiai          ###   ########.fr       */
+/*   Updated: 2025/07/30 18:48:25 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_range_rgb(int color)
 {
 	if (color < 0 || color > 255)
 	{
-		write(2, "Error : Color value out of range (0-255)\n", 34);
+		write(2, "Error : Color value out of range (0-255)\n", 41);
 		return (1);
 	}
 	return (0);

@@ -60,6 +60,9 @@ int		check_walls_left_right(char **map, int map_height);
 int		check_invalid_spaces(char **map, int map_height);
 int		check_valid_characters(char **map, int map_height);
 //assign colors and textures
+int		skip_spaces(const char *line, int index);
+int		check_valid_colors(char **colors);
+int		validate_colors(char **colors);
 int		assign_texture(t_config *config, char *line);
 int		assign_colors(t_config *config, char *line);
 //map creation
