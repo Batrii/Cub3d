@@ -37,55 +37,47 @@ int	skip_spaces(const char *line, int index)
 	return (index);
 }
 
-int	assign_texture(t_config *config, char *line)
+int	valid_tex(char *line, char **texture)
 {
 	int		i;
-	char	**split_so_texture;
-	char	**split_we_texture;
-	char	**split_ea_texture;
-	char	**split_no_texture;
+	char	**split;
 
+	i = skip_spaces(line, 2);
+	split = utils_split(line + i, ' ');
+	if (validate_texture(split) != 0)
+	{
+		free_split(split);
+		return (1);
+	}
+	*texture = my_strdup(split[0]);
+	free_split(split);
+	return (0);
+}
+
+int	assign_texture(t_config *config, char *line)
+{
 	if (line[0] == 'N' && line[1] == 'O')
 	{
-		i = skip_spaces(line, 2);
-		split_no_texture = utils_split(line + i, ' ');
-		if (validate_texture(split_no_texture) != 0)
+		if (valid_tex(line, &config->no_texture) != 0)
 			return (1);
-		config->no_texture = my_strdup(split_no_texture[0]);
-		free_split(split_no_texture);
 	}
 	else if (line[0] == 'S' && line[1] == 'O')
 	{
-		i = skip_spaces(line, 2);
-		split_so_texture = utils_split(line + i, ' ');
-		if (validate_texture(split_so_texture) != 0)
+		if (valid_tex(line, &config->so_texture) != 0)
 			return (1);
-		config->so_texture = my_strdup(split_so_texture[0]);
-		free_split(split_so_texture);
 	}
 	else if (line[0] == 'W' && line[1] == 'E')
 	{
-		i = skip_spaces(line, 2);
-		split_we_texture = utils_split(line + i, ' ');
-		if (validate_texture(split_we_texture) != 0)
+		if (valid_tex(line, &config->we_texture) != 0)
 			return (1);
-		config->we_texture = my_strdup(split_we_texture[0]);
-		free_split(split_we_texture);
 	}
 	else if (line[0] == 'E' && line[1] == 'A')
 	{
-		i = skip_spaces(line, 2);
-		split_ea_texture = utils_split(line + i, ' ');
-		if (validate_texture(split_ea_texture) != 0)
+		if (valid_tex(line, &config->ea_texture) != 0)
 			return (1);
-		config->ea_texture = my_strdup(split_ea_texture[0]);
-		free_split(split_ea_texture);
 	}
 	else
-	{
-		write(2, "Error: Invalid texture line\n", 21);
-		return (1);
-	}
+		return (write(2, "Error: Invalid texture line\n", 21), 1);
 	return (0);
 }
 

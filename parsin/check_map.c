@@ -42,8 +42,15 @@ int	once_player(char **map)
 	return (0);
 }
 
-int	is_invalid_space(char **map, int i, int j, int map_height, int len)
+int	is_invalid_space(char **map, int i, int j)
 {
+	int	map_height;
+	int	len;
+
+	map_height = 0;
+	len = ft_strlen(map[i]);
+	while (map[map_height])
+		map_height++;
 	if (map[i][j] == '0' || map[i][j] == 'N' ||
 		map[i][j] == 'S' || map[i][j] == 'E' ||
 		map[i][j] == 'W')
@@ -78,7 +85,7 @@ int	check_invalid_spaces(char **map, int map_height)
 				map[i][j] == 'S' || map[i][j] == 'E' ||
 				map[i][j] == 'W')
 			{
-				if (is_invalid_space(map, i, j, map_height, len) != 0)
+				if (is_invalid_space(map, i, j) != 0)
 					return (printf("Error : invalid spaces\n"), 1);
 			}
 			j++;
