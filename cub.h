@@ -66,6 +66,8 @@ int		validate_colors(char **colors);
 int		assign_texture(t_config *config, char *line);
 int		assign_colors(t_config *config, char *line);
 //map creation
+int		open_file(char *filename);
+int		skip_empty_lines(int fd, char **line);
 int		create_map(char *filename, t_config *config);
 //check walls helpers
 int		check_right_walls(char **map, int len, int i);

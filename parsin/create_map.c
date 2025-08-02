@@ -63,44 +63,42 @@ static int	handle_config_sec(t_config *config, char *line, int *in_map_section)
 	return (0);
 }
 
-static int	open_file(char *filename)
-{
-	int	fd;
+// static int	open_file(char *filename)
+// {
+// 	int	fd;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		write(2, "Error: opening file\n", 19);
-		return (-1);
-	}
-	return (fd);
-}
+// 	fd = open(filename, O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		write(2, "Error: opening file\n", 19);
+// 		return (-1);
+// 	}
+// 	return (fd);
+// }
 
-static int	skip_empty_lines(int fd, char **line)
-{
-	while (*line && is_line_empty(*line))
-	{
-		free(*line);
-		*line = get_next_line(fd);
-	}
-	return (*line == NULL);
-}
+// static int	skip_empty_lines(int fd, char **line)
+// {
+// 	while (*line && is_line_empty(*line))
+// 	{
+// 		free(*line);
+// 		*line = get_next_line(fd);
+// 	}
+// 	return (*line == NULL);
+// }
 
-int	create_map(char *filename, t_config *config)
+static int	loop_lines(int fd, t_config *config, int *in_map_section)
 {
-	int		fd;
 	char	*line;
-	int		in_map_section;
 
-	in_map_section = 0;
-	if ((fd = open_file(filename)) < 0)
-		return (1);
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (skip_empty_lines(fd, &line))
+		{
+			close(fd);
 			return (1);
-		if (handle_config_sec(config, line, &in_map_section) != 0)
+		}
+		if (handle_config_sec(config, line, in_map_section) != 0)
 		{
 			free(line);
 			close(fd);
@@ -110,6 +108,20 @@ int	create_map(char *filename, t_config *config)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	return (0);
+}
+
+int	create_map(char *filename, t_config *config)
+{
+	int		fd;
+	int		in_map_section;
+
+	in_map_section = 0;
+	fd = open_file(filename);
+	if (fd < 0)
+		return (1);
+	if (loop_lines(fd, config, &in_map_section) != 0)
+		return (1);
 	if (!in_map_section)
 		return (write(2, "Error: No map found in the file\n", 32), 1);
 	return (0);
