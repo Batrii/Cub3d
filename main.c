@@ -12,7 +12,7 @@
 
 #include "cub.h"
 
-void initialize_config(t_config *config)
+void	initialize_config(t_config *config)
 {
 	config->no_texture = NULL;
 	config->so_texture = NULL;
@@ -29,8 +29,10 @@ void initialize_config(t_config *config)
 	config->map_height = 0;
 }
 
-void free_config(t_config *config)
+void	free_config(t_config *config)
 {
+	int	i;
+
 	if (config->no_texture)
 		free(config->no_texture);
 	if (config->so_texture)
@@ -41,16 +43,20 @@ void free_config(t_config *config)
 		free(config->ea_texture);
 	if (config->map)
 	{
-		for (int i = 0; i < config->map_height; i++)
+		i = 0;
+		while (i < config->map_height)
+		{
 			free(config->map[i]);
+			i++;
+		}
 		free(config->map);
 	}
 	free(config);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_config *config;
+	t_config	*config;
 
 	if (argc != 2)
 	{
