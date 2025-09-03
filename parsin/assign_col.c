@@ -27,6 +27,7 @@ int	colors_f(t_config *config, char *line)
 	config->floor_color_r = ft_atoi(split_colors[0]);
 	config->floor_color_g = ft_atoi(split_colors[1]);
 	config->floor_color_b = ft_atoi(split_colors[2]);
+	config->floor_color = create_rgb(config->floor_color_r, config->floor_color_g, config->floor_color_b);
 	free_split(split_colors);
 	return (0);
 }
@@ -46,6 +47,7 @@ int	colors_c(t_config *config, char *line)
 	config->ceiling_color_r = ft_atoi(split_ceiling_colors[0]);
 	config->ceiling_color_g = ft_atoi(split_ceiling_colors[1]);
 	config->ceiling_color_b = ft_atoi(split_ceiling_colors[2]);
+	config->ceiling_color = create_rgb(config->ceiling_color_r, config->ceiling_color_g, config->ceiling_color_b);
 	free_split(split_ceiling_colors);
 	return (0);
 }

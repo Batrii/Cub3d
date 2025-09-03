@@ -29,9 +29,11 @@ typedef struct s_config
 	int		floor_color_r;
 	int		floor_color_g;
 	int		floor_color_b;
+	int		floor_color;
 	int		ceiling_color_r;
 	int		ceiling_color_g;
 	int		ceiling_color_b;
+	int		ceiling_color;
 	char	**map;
 	int		map_width;
 	int		map_height;
@@ -65,6 +67,8 @@ int		check_valid_colors(char **colors);
 int		validate_colors(char **colors);
 int		assign_texture(t_config *config, char *line);
 int		assign_colors(t_config *config, char *line);
+//for rgb colors
+int		create_rgb(int r, int g, int b);
 //map creation
 int		open_file(char *filename);
 int		skip_empty_lines(int fd, char **line);
