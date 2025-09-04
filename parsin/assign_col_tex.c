@@ -17,14 +17,11 @@ int	validate_texture(char **split_texture)
 	if (!split_texture || !split_texture[0])
 	{
 		write(2, "Error: Invalid texture format\n", 30);
-		if (split_texture)
-			free_split(split_texture);
 		return (1);
 	}
 	if (split_texture[1] != NULL)
 	{
-		write(2, "Error: Invalid texture format\n", 30);
-		free_split(split_texture);
+		write(2, "Error: Invalid texture format (Extra args)\n", 43);
 		return (1);
 	}
 	return (0);
@@ -84,6 +81,12 @@ int	assign_texture(t_config *config, char *line)
 int	validate_colors(char **colors)
 {
 	if (!colors || !colors[0] || !colors[1] || !colors[2])
+	{
+		write(2, "Error: Invalid color format\n", 28);
+		return (1);
+	}
+	if (colors[0][0] == ' ' || colors[1][0] == ' ' || colors[2][0] == ' '
+		|| colors[0][0] == '\0' || colors[1][0] == '\0' || colors[2][0] == '\0')
 	{
 		write(2, "Error: Invalid color format\n", 28);
 		return (1);

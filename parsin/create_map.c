@@ -63,29 +63,6 @@ static int	handle_config_sec(t_config *config, char *line, int *in_map_section)
 	return (0);
 }
 
-// static int	open_file(char *filename)
-// {
-// 	int	fd;
-
-// 	fd = open(filename, O_RDONLY);
-// 	if (fd < 0)
-// 	{
-// 		write(2, "Error: opening file\n", 19);
-// 		return (-1);
-// 	}
-// 	return (fd);
-// }
-
-// static int	skip_empty_lines(int fd, char **line)
-// {
-// 	while (*line && is_line_empty(*line))
-// 	{
-// 		free(*line);
-// 		*line = get_next_line(fd);
-// 	}
-// 	return (*line == NULL);
-// }
-
 static int	loop_lines(int fd, t_config *config, int *in_map_section)
 {
 	char	*line;
