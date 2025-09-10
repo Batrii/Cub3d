@@ -56,25 +56,22 @@ int	valid_tex(char *line, char **texture)
 
 int	assign_texture(t_config *config, char *line)
 {
+	static int (texture_lines);
 	if (line[0] == 'N' && line[1] == 'O')
 	{
-		if (valid_tex(line, &config->no_texture) != 0)
-			return (1);
+		return (check_valid_texture(&texture_lines, &config->no_texture, line));
 	}
 	else if (line[0] == 'S' && line[1] == 'O')
 	{
-		if (valid_tex(line, &config->so_texture) != 0)
-			return (1);
+		return (check_valid_texture(&texture_lines, &config->so_texture, line));
 	}
 	else if (line[0] == 'W' && line[1] == 'E')
 	{
-		if (valid_tex(line, &config->we_texture) != 0)
-			return (1);
+		return (check_valid_texture(&texture_lines, &config->we_texture, line));
 	}
 	else if (line[0] == 'E' && line[1] == 'A')
 	{
-		if (valid_tex(line, &config->ea_texture) != 0)
-			return (1);
+		return (check_valid_texture(&texture_lines, &config->ea_texture, line));
 	}
 	else
 		return (write(2, "Error: Invalid texture line\n", 28), 1);

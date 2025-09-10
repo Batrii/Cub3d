@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   others.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdael-m <abdael-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:30:14 by bnafiai           #+#    #+#             */
-/*   Updated: 2025/09/08 16:34:53 by abdael-m         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:38:55 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,14 @@ void	free_config(t_config *config)
 int	create_rgb(int r, int g, int b)
 {
 	return ((r << 16) | (g << 8) | b);
+}
+
+int	check_duplicate(int texture_line)
+{
+	if (texture_line > 4)
+	{
+		write(2, "Error : duplicate textures\n", 27);
+		return (1);
+	}
+	return (0);
 }

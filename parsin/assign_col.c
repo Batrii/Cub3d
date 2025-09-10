@@ -66,13 +66,20 @@ int	colors_c(t_config *config, char *line)
 
 int	assign_colors(t_config *config, char *line)
 {
+	static int (floor_lines), (ceiling_lines);
 	if (line[0] == 'F')
 	{
+		floor_lines += 1;
+		if (floor_lines > 1)
+			return (write(2, "Error: duplicate floor colors\n", 30), 1);
 		if (colors_f(config, line) != 0)
 			return (1);
 	}
 	else if (line[0] == 'C')
 	{
+		ceiling_lines += 1;
+		if (ceiling_lines > 1)
+			return (write(2, "Error: duplicate ceiling colors\n", 32), 1);
 		if (colors_c(config, line) != 0)
 			return (1);
 	}
