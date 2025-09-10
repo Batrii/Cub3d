@@ -16,10 +16,7 @@
 
 int	once_player(char **map)
 {
-	int	i;
-	int	j;
-	int	count_player;
-
+	int (i), (j), (count_player);
 	i = 0;
 	count_player = 0;
 	while (map[i])
@@ -39,6 +36,8 @@ int	once_player(char **map)
 		}
 		i++;
 	}
+	if (count_player == 0)
+		return (write(2, "Error: No player in the map\n", 28), 1);
 	return (0);
 }
 
