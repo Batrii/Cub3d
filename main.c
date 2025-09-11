@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 		config->ea_texture,
 		NULL
 	},
-		(int []){config->floor_color, config->ceiling_color},
+		(int []){config->ceiling_color, config->floor_color},
 		config);
 	return (0);
 }
