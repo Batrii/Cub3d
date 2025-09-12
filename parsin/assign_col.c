@@ -17,7 +17,7 @@ int	colors_f(t_config *config, char *line)
 	int		i;
 	char	**split_colors;
 
-	if (check_for_commas(line) != 2)
+	if (check_for_commas(line) != 2 || check_args(line) != 0)
 	{
 		write(2, "Error : Invalid color line\n", 27);
 		return (1);
@@ -43,7 +43,7 @@ int	colors_c(t_config *config, char *line)
 	int		i;
 	char	**split_ceiling_colors;
 
-	if (check_for_commas(line) != 2)
+	if (check_for_commas(line) != 2 || check_args(line) != 0)
 	{
 		write(2, "Error : Invalid color line\n", 27);
 		return (1);
@@ -55,6 +55,9 @@ int	colors_c(t_config *config, char *line)
 		free_split(split_ceiling_colors);
 		return (1);
 	}
+	printf("%s\n", split_ceiling_colors[0]);
+	printf("%s\n", split_ceiling_colors[1]);
+	printf("%s\n", split_ceiling_colors[2]);
 	config->ceiling_color_r = ft_atoi(split_ceiling_colors[0]);
 	config->ceiling_color_g = ft_atoi(split_ceiling_colors[1]);
 	config->ceiling_color_b = ft_atoi(split_ceiling_colors[2]);

@@ -81,17 +81,11 @@ int	assign_texture(t_config *config, char *line)
 int	validate_colors(char **colors)
 {
 	if (!colors || !colors[0] || !colors[1] || !colors[2])
-	{
-		write(2, "Error: Invalid color format\n", 28);
-		return (1);
-	}
+		return (write(2, "Error: Invalid color format\n", 28), 1);
 	if (colors[0][0] == ' ' || colors[1][0] == ' ' || colors[2][0] == ' '
 		|| colors[0][0] == '\0' || colors[1][0] == '\0' || colors[2][0] == '\0'
 		|| colors[0][0] == '\n' || colors[1][0] == '\n' || colors[2][0] == '\n')
-	{
-		write(2, "Error: Invalid color format\n", 28);
-		return (1);
-	}
+		return (write(2, "Error: Invalid color format\n", 28), 1);
 	if (check_valid_colors(colors) != 0)
 		return (1);
 	if (check_range_rgb(ft_atoi(colors[0])) != 0

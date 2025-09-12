@@ -26,9 +26,9 @@ int	check_top_walls(char **map, int map_height)
 		i++;
 	while (i < len)
 	{
-		if (map[0][i] != '1')
+		if (!(map[0][i] == '1' || map[0][i] == ' '))
 		{
-			printf("Error: map is not surrounded by walls\n");
+			write(2, "Error: map is not surrounded by walls\n", 38);
 			return (1);
 		}
 		i++;

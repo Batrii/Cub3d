@@ -30,13 +30,15 @@ int	check_walls_left_right(char **map, int map_height)
 	while (i < map_height)
 	{
 		if (!map[i])
-		{
-			printf("Error: Invalid map row\n");
-			return (1);
-		}
+			return (printf("Error: Invalid map row\n"), 1);
 		len = ft_strlen(map[i]);
 		while (len > 0 && (map[i][len - 1] == '\r' || map[i][len - 1] == '\n'))
 			len--;
+		if (len == 0)
+		{
+			i++;
+			continue ;
+		}
 		if (check_left_walls(map, len, i) != 0)
 			return (1);
 		if (check_right_walls(map, len, i) != 0)

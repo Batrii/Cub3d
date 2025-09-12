@@ -48,7 +48,8 @@ static int	handle_config_sec(t_config *config, char *line, int *in_map_section)
 		if (assign_colors(config, line) != 0)
 			return (1);
 	}
-	else if (all_six_config(config) && (line[0] == '1' || line[0] == ' '))
+	else if (all_six_config(config) && ((line[0] == '1' || line[0] == ' ')
+			|| (line[0] == '\0' || line[0] == '\n')))
 	{
 		*in_map_section = 1;
 		append_map(&(config->map), line, &(config->map_height));
@@ -56,10 +57,7 @@ static int	handle_config_sec(t_config *config, char *line, int *in_map_section)
 			config->map_width = ft_strlen(line);
 	}
 	else
-	{
-		write(2, "Error: Invalid line in configuration\n", 37);
-		return (1);
-	}
+		return (write(2, "Error: Invalid line in configuration\n", 37), 1);
 	return (0);
 }
 
@@ -70,7 +68,7 @@ static int	loop_lines(int fd, t_config *config, int *in_map_section)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (skip_empty_lines(fd, &line))
+		if (!*in_map_section && skip_empty_lines(fd, &line))
 		{
 			if (!line)
 				break ;
