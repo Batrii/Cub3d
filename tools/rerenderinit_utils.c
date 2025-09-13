@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rerenderinit_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abdael-m <abdael-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:52:18 by abdael-m          #+#    #+#             */
-/*   Updated: 2025/09/11 13:47:59 by bnafiai          ###   ########.fr       */
+/*   Updated: 2025/09/13 11:15:10 by abdael-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_texture_color(t_image *texture, int tex_x, int tex_y)
 	return (color);
 }
 
-static void	ft_memset(void *addr, char value, int size)
+void	ft_memset(void *addr, char value, int size)
 {
 	int	index;
 

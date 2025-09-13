@@ -24,7 +24,8 @@ OBJECTS = ./main.o \
 		  ./parsin/assign_col.o \
 		  ./parsin/create_map_helper.o \
 		  ./utils/others.o \
-		  ./utils/other_helpers.o
+		  ./utils/other_helpers.o \
+		  ./tools/releaseinit.o
 
 all : $(NAME)
 
