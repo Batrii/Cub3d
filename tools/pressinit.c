@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pressinit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdael-m <abdael-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:20:28 by abdael-m          #+#    #+#             */
-/*   Updated: 2025/09/13 11:23:56 by abdael-m         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:17:58 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,38 @@ static void	setfov(double angler, t_globaldata *t)
 
 void	handle_keys(t_globaldata *t)
 {
-	if (t->keys[KEY_W])
+	if (t->keys[0])
 		setposition(t->player.px + cos(t->player.angler) * SPEED,
 			t->player.py + sin(t->player.angler) * SPEED, t);
-	if (t->keys[KEY_S])
+	if (t->keys[1])
 		setposition(t->player.px - cos(t->player.angler) * SPEED,
 			t->player.py - sin(t->player.angler) * SPEED, t);
-	if (t->keys[KEY_A])
+	if (t->keys[2])
 		setposition(t->player.px + cos(t->player.angler - PID2) * SPEED,
 			t->player.py + sin(t->player.angler - PID2) * SPEED, t);
-	if (t->keys[KEY_D])
+	if (t->keys[3])
 		setposition(t->player.px + cos(t->player.angler + PID2) * SPEED,
 			t->player.py + sin(t->player.angler + PID2) * SPEED, t);
-	if (t->keys[KEY_LEFT])
+	if (t->keys[4])
 		setfov(t->player.angler - PI / 300, t);
-	if (t->keys[KEY_RIGHT])
+	if (t->keys[5])
 		setfov(t->player.angler + PI / 300, t);
 }
 
 int	pressinit(int key, t_globaldata *t)
 {
-	if (key >= 0 && key < 75361)
-		t->keys[key] = 1;
+	if (key == KEY_W)
+		t->keys[0] = 1;
+	if (key == KEY_S)
+		t->keys[1] = 1;
+	if (key == KEY_A)
+		t->keys[2] = 1;
+	if (key == KEY_D)
+		t->keys[3] = 1;
+	if (key == KEY_LEFT)
+		t->keys[4] = 1;
+	if (key == KEY_RIGHT)
+		t->keys[5] = 1;
 	if (key == KEY_ESC)
 		exitinit(t);
 	return (0);
