@@ -6,7 +6,7 @@
 /*   By: bnafiai <bnafiai@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:02:17 by bnafiai           #+#    #+#             */
-/*   Updated: 2025/09/14 17:05:35 by bnafiai          ###   ########.fr       */
+/*   Updated: 2025/09/15 14:37:52 by bnafiai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,24 @@ int	check_valid_texture(int *texture_lines, char **texture, char *line)
 	return (0);
 }
 
+void	replace_tabs(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\t')
+			line[i] = ' ';
+		i++;
+	}
+}
+
 int	check_args(char *line)
 {
 	char	**split_line;
 
+	replace_tabs(line);
 	split_line = utils_split(line, ' ');
 	if (array_size(split_line) != 2)
 	{

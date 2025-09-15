@@ -60,6 +60,7 @@ int		create_rgb(int r, int g, int b);
 int		check_duplicate(int texture_line);
 int		check_args(char *line);
 int		check_valid_texture(int *texture_lines, char **texture, char *line);
+void	replace_tabs(char *line);
 //extension check
 int		check_extension(char *filename);
 //map check

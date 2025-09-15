@@ -41,6 +41,7 @@ int	valid_tex(char *line, char **texture)
 	int		i;
 	char	**split;
 
+	replace_tabs(line);
 	i = skip_spaces(line, 2);
 	split = utils_split(line + i, ' ');
 	if (validate_texture(split) != 0)
@@ -48,7 +49,8 @@ int	valid_tex(char *line, char **texture)
 		free_split(split);
 		return (1);
 	}
-	split[0][ft_strlen(split[0]) - 1] = '\0';
+	if (split[0][ft_strlen(split[0]) - 1] == '\n')
+		split[0][ft_strlen(split[0]) - 1] = '\0';
 	*texture = my_strdup(split[0]);
 	free_split(split);
 	return (0);
